@@ -4,10 +4,8 @@ import ApiCalendar from "react-google-calendar-api";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    JSON.parse(localStorage.getItem("isLoggedIn"))
-  );
-  const [userProfile, setUserProfile] = useState({});
+  const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem("isLoggedIn")));
+  const [userProfile, setUserProfile] = useState(JSON.parse(localStorage.getItem("userProfile")));
 
   const handleLogin = () => {
     ApiCalendar.handleAuthClick()
@@ -15,6 +13,7 @@ const AuthProvider = ({ children }) => {
         console.log("sign in succesful!");
         localStorage.setItem("isLoggedIn", true);
         setIsLoggedIn(true);
+        fetchProfile();
       })
       .catch((e) => {
         console.error(`sign in failed ${e}`);
@@ -27,16 +26,16 @@ const AuthProvider = ({ children }) => {
     setUserProfile({});
 
     localStorage.setItem("isLoggedIn", false);
-    localStorage.setItem("userProfile", {});
+    localStorage.setItem("userProfile", null);
   };
 
-  const fetchProfile = async () => {
-    ApiCalendar.onLoad(() => {
-      const userProfile = ApiCalendar.getBasicUserProfile();
+  const fetchProfile = () => {
+    ApiCalendar.onLoad(async () => {
+      const userProfile = await ApiCalendar.getBasicUserProfile();
       const profileDetails = {
-        name: userProfile.getName(),
-        email: userProfile.getEmail(),
-        picture: userProfile.getImageUrl(),
+        name: await userProfile.getName(),
+        email: await userProfile.getEmail(),
+        picture: await userProfile.getImageUrl(),
       };
       setUserProfile(profileDetails);
 

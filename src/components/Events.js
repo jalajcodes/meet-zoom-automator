@@ -1,8 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useEvents } from "../contexts/eventsContext";
+import { useAudio } from "../hooks/useAudio";
+import { formatTimeFromNow } from "../utils";
 
 export default function Events() {
+  const [scheduledTimers, setScheduledTimers] = useState(JSON.parse(localStorage.getItem("scheduledTimers")) || []);
   const { events, fetchEvents } = useEvents();
+  const audio = useAudio("/assets/alarm.wav", { volume: 0.8, playbackRate: 1.5 });
 
   useEffect(() => {
     if (!events.length) {
@@ -10,17 +14,129 @@ export default function Events() {
     }
   }, []);
 
+  useEffect(() => {
+    if (scheduledTimers.length) {
+      scheduledTimers.forEach((timer) => {
+        handleTimer(timer);
+      });
+    }
+  }, []);
+
+  const handleTimer = (calendarEvent) => {
+    const alarmTime = new Date(calendarEvent.time).getTime();
+    const now = new Date().getTime();
+    const timeDiff = alarmTime - now;
+
+    console.log(timeDiff, "timeDiff");
+
+    // start alarm 20 seconds before timeDiff
+    const alarmTimer = setTimeout(() => {
+      audio.play();
+    }, timeDiff - 20000);
+
+    const timer = setTimeout(() => {
+      console.log("alarm is playing");
+      audio.pause();
+      window.open(calendarEvent.url, "_blank");
+
+      clearTimeout(alarmTimer);
+      clearTimeout(timer);
+
+      const newScheduledTimers = scheduledTimers.filter((_timer) => _timer.id !== calendarEvent.id);
+      setScheduledTimers(newScheduledTimers);
+      localStorage.setItem("scheduledTimers", JSON.stringify(newScheduledTimers));
+    }, timeDiff);
+
+    return { timer, alarmTimer };
+  };
+
+  const startAlarm = (calendarEvent) => {
+    const { timer, alarmTimer } = handleTimer(calendarEvent);
+
+    const newTimer = {
+      timer,
+      alarmTimer,
+      ...calendarEvent,
+    };
+
+    const newScheduledTimers = [...scheduledTimers, newTimer];
+
+    setScheduledTimers(newScheduledTimers);
+    localStorage.setItem("scheduledTimers", JSON.stringify(newScheduledTimers));
+
+    return () => {
+      clearTimeout(alarmTimer);
+    };
+  };
+
+  const stopAlarm = (id) => {
+    const timerToStop = scheduledTimers.find((timer) => timer.id === id);
+    console.log("🚀 ~ file: Events.js ~ line 74 ~ stopAlarm ~ timerToStop", timerToStop);
+    clearTimeout(timerToStop.timer);
+    clearTimeout(timerToStop.alarmTimer);
+
+    const newScheduledTimers = scheduledTimers.filter((timer) => timer.id !== id);
+    setScheduledTimers(newScheduledTimers);
+    localStorage.setItem("scheduledTimers", JSON.stringify(newScheduledTimers));
+  };
+
+  const timerAlreadyStarted = (id) => {
+    return scheduledTimers.find((timer) => timer.id === id);
+  };
+
   if (!events.length) {
-    <div className="">No Events Found</div>;
+    return <div className="">No Upcoming Events Found</div>;
   }
 
   return (
-    <div class="flex justify-center">
-      <ul class="bg-white rounded-lg border border-gray-200 text-gray-900">
+    <div className="flex p-5">
+      <ul className="bg-white rounded-lg border text-left border-gray-200 text-gray-900">
         {events.map((event) => (
-          <li key={event.id} class="px-6 py-2 border-b border-gray-200 w-full rounded-t-lg">
-            {event.summary}
-          </li>
+          <React.Fragment key={event.id}>
+            <li className="px-6 py-2 border-b border-gray-200 w-full rounded-t-lg m-2">
+              <div>
+                <strong>Event Name:</strong> {event.summary}
+              </div>
+
+              {event.url && (
+                <div>
+                  <strong>Link:</strong> {event.url}
+                </div>
+              )}
+
+              {event.time && (
+                <div>
+                  <strong>Start Time:</strong> {formatTimeFromNow(event.time)}
+                </div>
+              )}
+
+              <div>
+                <div className="flex space-x-2 w-full self-stretch">
+                  {timerAlreadyStarted(event.id) ? (
+                    <button
+                      type="button"
+                      data-mdb-ripple="true"
+                      data-mdb-ripple-color="light"
+                      onClick={() => stopAlarm(event.id)}
+                      className="inline-block px-6 mt-2 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                    >
+                      Stop Alarm
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      data-mdb-ripple="true"
+                      data-mdb-ripple-color="light"
+                      onClick={() => startAlarm(event)}
+                      className="inline-block px-6 mt-2 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                    >
+                      Start Alarm
+                    </button>
+                  )}
+                </div>
+              </div>
+            </li>
+          </React.Fragment>
         ))}
       </ul>
     </div>
