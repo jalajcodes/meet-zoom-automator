@@ -2,17 +2,7 @@ import React, { useEffect } from "react";
 import { useAuth } from "../contexts/authContext";
 
 function Header() {
-  const { isLoggedIn, handleLogin, handleLogout, fetchProfile, userProfile } = useAuth();
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      //   const profile = JSON.parse(localStorage.getItem("userProfile"));
-
-      //   if (!profile?.length) {
-      fetchProfile();
-      //   }
-    }
-  }, [isLoggedIn]);
+  const { isLoggedIn, handleLogin, handleLogout, userProfile } = useAuth();
 
   return (
     <header>
