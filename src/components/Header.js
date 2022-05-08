@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useAuth } from "../contexts/authContext";
 
 function Header() {
   const { isLoggedIn, handleLogin, handleLogout, userProfile } = useAuth();
-
+  console.log(userProfile);
   return (
     <header>
-      <nav className="navbar navbar-expand-lg shadow-md py-2 bg-white relative flex items-center justify-center w-full">
-        <div className="container px-6 w-full flex flex-wrap items-center justify-center">
+      <nav className="navbar navbar-expand-lg shadow-md py-2 bg-white">
+        <div className="px-10 py-2  w-full flex  items-center">
           <div className="flex items-center">
             <button
               className="navbar-toggler border-0 py-3 lg:hidden leading-none text-xl bg-transparent text-gray-600 hover:text-gray-700 focus:text-gray-700 transition-shadow duration-150 ease-in-out mr-2"
@@ -31,63 +31,73 @@ function Header() {
               <ul className="navbar-nav mr-auto lg:flex lg:flex-row">
                 <li className="nav-item">
                   <a
-                    className="nav-link block pr-2 lg:px-2 py-2 text-gray-600 hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out"
+                    className="nav-link font-bold block pr-2 lg:px-2 py-2 text-gray-600 hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out"
                     href="#!"
                     data-mdb-ripple="true"
                     data-mdb-ripple-color="light"
                   >
-                    Home
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    className="nav-link block pr-2 lg:px-2 py-2 text-gray-600 hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out"
-                    href="#!"
-                    data-mdb-ripple="true"
-                    data-mdb-ripple-color="light"
-                  >
-                    Features
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    className="nav-link block pr-2 lg:px-2 py-2 text-gray-600 hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out"
-                    href="#!"
-                    data-mdb-ripple="true"
-                    data-mdb-ripple-color="light"
-                  >
-                    Pricing
-                  </a>
-                </li>
-                <li className="nav-item mb-2 ml-auto lg:mb-0">
-                  <a
-                    className="nav-link block pr-2 lg:px-2 py-2 text-gray-600 hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out"
-                    href="#!"
-                    data-mdb-ripple="true"
-                    data-mdb-ripple-color="light"
-                  >
-                    About
+                    ZooMeet
                   </a>
                 </li>
               </ul>
 
-              <ul>{isLoggedIn ? <li onClick={handleLogout}>Logout</li> : <li onClick={handleLogin}>Login</li>}</ul>
+              <ul>
+                {isLoggedIn ? (
+                  <>
+                    <img
+                      id="dropdownMenuButton2"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      src="https://www.shareicon.net/data/512x512/2016/09/01/822711_user_512x512.png"
+                      className="w-12 overflow-hidden h-12 rounded-full aspect-square border-2 border-blue-400 shadow-sm"
+                      alt={userProfile.name}
+                    />
+
+                    <ul
+                      className="dropdown-menu right-5  min-w-max absolute  text-base z-50 float-left py-2 list-none text-left rounded-lg shadow-lg mt-1 hidden m-0 bg-clip-padding border-none bg-slate-800"
+                      aria-labelledby="dropdownMenuButton2"
+                    >
+                      <li>
+                        <a
+                          className="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white focus:text-white focus:bg-gray-700 active:bg-blue-600"
+                          href="#"
+                        >
+                          Profile
+                        </a>
+                      </li>
+
+                      <li>
+                        <hr className="h-0 my-2 border border-solid border-t-0 border-gray-300 opacity-25" />
+                      </li>
+                      <li
+                        className="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white focus:text-white focus:bg-gray-700"
+                        onClick={handleLogout}
+                      >
+                        Logout
+                      </li>
+                    </ul>
+                  </>
+                ) : (
+                  <li onClick={handleLogin} className="px-4 py-1.5 text-white rounded-full bg-slate-700">
+                    Login
+                  </li>
+                )}
+              </ul>
             </div>
           </div>
         </div>
       </nav>
       <div
-        className="relative overflow-hidden bg-no-repeat bg-cover"
+        className={`relative  overflow-hidden bg-no-repeat bg-cover ${isLoggedIn ? "h-40" : "h-screen"}`}
         style={{
           backgroundPosition: "50%",
           backgroundImage: 'url("https://mdbcdn.b-cdn.net/img/new/slides/146.webp")',
-          height: "350px",
         }}
       >
         <div className="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed" style={{ backgroundColor: "rgba(0, 0, 0, 0.75)" }}>
           <div className="flex justify-center items-center h-full">
             <div className="text-center text-white px-6 md:px-12">
-              <h1 className="text-5xl font-bold mt-0 mb-6">Hello, {userProfile.name ? userProfile.name : "Guest"}</h1>
+              <h1 className="text-5xl font-bold mt-0 mb-6">Hello, {userProfile?.name ? userProfile.name : "Guest"}</h1>
               {!isLoggedIn && <h6 className="text-3xl font-bold mb-8">Please Login to Get Started</h6>}
             </div>
           </div>

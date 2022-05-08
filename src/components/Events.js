@@ -90,26 +90,30 @@ export default function Events() {
 
   return (
     <div className="flex p-5">
-      <ul className="bg-white rounded-lg border text-left border-gray-200 text-gray-900">
+      <ul className=" text-left text-gray-900">
         {events.map((event) => (
           <React.Fragment key={event.id}>
-            <li className="px-6 py-2 border-b border-gray-200 w-full rounded-t-lg m-2">
-              <div>
-                <strong>Event Name:</strong> {event.summary}
+            <li className="px-5 shadow-md border-2 py-4 border-slate-300 bg-slate-200 w-full rounded-lg gap-2 flex flex-col">
+              <div className="flex flex-col gap-1">
+                <div>
+                  <strong>Event Name:</strong> {event.summary}
+                </div>
+
+                {event.url && (
+                  <div>
+                    <strong>Link:</strong>
+                    <a href={event.url} target="_blank" rel="noreferrer">
+                      {event.url}
+                    </a>
+                  </div>
+                )}
+
+                {event.time && (
+                  <div>
+                    <strong>Start Time:</strong> {formatTimeFromNow(event.time)}
+                  </div>
+                )}
               </div>
-
-              {event.url && (
-                <div>
-                  <strong>Link:</strong> {event.url}
-                </div>
-              )}
-
-              {event.time && (
-                <div>
-                  <strong>Start Time:</strong> {formatTimeFromNow(event.time)}
-                </div>
-              )}
-
               <div>
                 <div className="flex space-x-2 w-full self-stretch">
                   {timerAlreadyStarted(event.id) ? (
@@ -118,7 +122,7 @@ export default function Events() {
                       data-mdb-ripple="true"
                       data-mdb-ripple-color="light"
                       onClick={() => stopAlarm(event.id)}
-                      className="inline-block px-6 mt-2 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                      className="inline-block px-6 mt-2 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
                     >
                       Stop Alarm
                     </button>
