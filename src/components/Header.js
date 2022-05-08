@@ -3,40 +3,22 @@ import { useAuth } from "../contexts/authContext";
 
 function Header() {
   const { isLoggedIn, handleLogin, handleLogout, userProfile } = useAuth();
-  console.log(userProfile);
   return (
     <header>
       <nav className="navbar navbar-expand-lg shadow-md py-2 bg-white">
         <div className="px-10 py-2  w-full flex  items-center">
-          <div className="flex items-center">
-            <button
-              className="navbar-toggler border-0 py-3 lg:hidden leading-none text-xl bg-transparent text-gray-600 hover:text-gray-700 focus:text-gray-700 transition-shadow duration-150 ease-in-out mr-2"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContentY"
-              aria-controls="navbarSupportedContentY"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <svg aria-hidden="true" focusable="false" data-prefix="fas" className="w-5" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                <path
-                  fill="currentColor"
-                  d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"
-                ></path>
-              </svg>
-            </button>
-          </div>
-          <div className="navbar-collapse collapse grow items-center" id="navbarSupportedContentY">
+          <div className=" grow items-center" id="navbarSupportedContentY">
             <div className="flex justify-between items-center w-full cursor-pointer">
               <ul className="navbar-nav mr-auto lg:flex lg:flex-row">
                 <li className="nav-item">
                   <a
-                    className="nav-link font-bold block pr-2 lg:px-2 py-2 text-gray-600 hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out"
+                    className="nav-link   tex-4xl flex font-bold items-center pr-2 lg:px-2 py-2 text-gray-600 hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out"
                     href="#!"
                     data-mdb-ripple="true"
                     data-mdb-ripple-color="light"
                   >
-                    ZooMeet
+                    <img src="./logo.png" alt="ZooMeet" />
+                    <span className="ml-3">ZooMeet</span>
                   </a>
                 </li>
               </ul>
@@ -49,7 +31,7 @@ function Header() {
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                       src="https://www.shareicon.net/data/512x512/2016/09/01/822711_user_512x512.png"
-                      className="w-12 overflow-hidden h-12 rounded-full aspect-square border-2 border-blue-400 shadow-sm"
+                      className="w-12 overflow-hidden h-12 rounded-full aspect-square border-2 border-violet-400 shadow-sm"
                       alt={userProfile.name}
                     />
 
@@ -59,7 +41,7 @@ function Header() {
                     >
                       <li>
                         <a
-                          className="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white focus:text-white focus:bg-gray-700 active:bg-blue-600"
+                          className="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white focus:text-white focus:bg-gray-700 active:bg-violet-600"
                           href="#"
                         >
                           Profile

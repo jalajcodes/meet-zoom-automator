@@ -90,10 +90,10 @@ export default function Events() {
 
   return (
     <div className="flex p-5">
-      <ul className=" text-left text-gray-900">
+      <ul className=" text-left text-gray-900 flex gap-3 flex-wrap">
         {events.map((event) => (
           <React.Fragment key={event.id}>
-            <li className="px-5 shadow-md border-2 py-4 border-slate-300 bg-slate-200 w-full rounded-lg gap-2 flex flex-col">
+            <li className="px-5 shadow-md border-2 py-4 border-slate-300 bg-slate-200  rounded-lg gap-2 flex flex-col w-fit">
               <div className="flex flex-col gap-1">
                 <div>
                   <strong>Event Name:</strong> {event.summary}
@@ -132,7 +132,7 @@ export default function Events() {
                       data-mdb-ripple="true"
                       data-mdb-ripple-color="light"
                       onClick={() => startAlarm(event)}
-                      className="inline-block px-6 mt-2 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                      className="inline-block px-6 mt-2 py-2.5 bg-violet-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-violet-700 hover:shadow-lg focus:bg-violet-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-violet-800 active:shadow-lg transition duration-150 ease-in-out"
                     >
                       Start Alarm
                     </button>
