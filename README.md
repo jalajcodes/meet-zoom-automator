@@ -21,6 +21,38 @@ _ZooMeet is a WebApp which automates Zoom and Meet meeting for you. Just log in 
 - Ring alarm 20 seconds before the meeting start time.
 - Open the meeting automatically
 - Create new events from the app itself.
+- Refresh Events
+- Start All Alarms at once
+- Change Alarm Tune (coming soon)
 - Browser Extension (Coming Soon)
+- Sort, Filter and Search Events (In Progress)
+- Update Events (In Progress)
+- Delete Events (In Progress)
 
----
+## Setup Locally
+
+- Clone the repo
+- Go to `console.developer.google.com` and create a new project.
+- Go to Api and Services page and enable Google Calendar API.
+- Create a new file in root of your project and name it `apiGoogleconfig.json`.
+- Copy the following code and paste it in the file after adding the client id and api key you got from google developer console.
+
+```
+{
+    "clientId": "CLIENT_ID",
+    "apiKey": "API_KEY",
+    "scope": "https://www.googleapis.com/auth/calendar",
+    "discoveryDocs": [
+      "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"
+    ]
+}
+```
+
+- Run the following command in the cloned repo:
+
+```
+npm install
+npm start
+```
+
+- Happy Hacking!
