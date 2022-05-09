@@ -20,10 +20,9 @@ const EventsProvider = ({ children }) => {
         orderBy: "updated",
       })
         .then(({ result }) => {
-          console.log(result);
           const filteredEvents = filterEvents(result.items);
-          console.log(filteredEvents, "filteredEvents");
           setEvents(filteredEvents);
+          console.log(filteredEvents, "filteredEvents");
         })
         .catch((err) => {
           console.log(err);

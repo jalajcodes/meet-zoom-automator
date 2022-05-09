@@ -25,7 +25,6 @@ const CreateEvent = () => {
           try {
              await createEvent(startTime, endTime, summary, description);
           } catch (error) {
-          console.log("🚀 ~ file: CreateEvent.jsx ~ line 21 ~ CreateEvent ~ error", error)
           }
         }}
       >

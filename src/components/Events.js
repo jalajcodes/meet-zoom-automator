@@ -33,15 +33,12 @@ export default function Events() {
     const now = new Date().getTime();
     const timeDiff = alarmTime - now;
 
-    console.log(timeDiff, "timeDiff");
-
     // start alarm 20 seconds before timeDiff
     const alarmTimer = setTimeout(() => {
       audio.play();
     }, timeDiff - 20000);
 
     const timer = setTimeout(() => {
-      console.log("alarm is playing");
       audio.pause();
       window.open(calendarEvent.url, "_blank");
 
@@ -77,7 +74,6 @@ export default function Events() {
 
   const stopAlarm = (id) => {
     const timerToStop = scheduledTimers.find((timer) => timer.id === id);
-    console.log("🚀 ~ file: Events.js ~ line 74 ~ stopAlarm ~ timerToStop", timerToStop);
     clearTimeout(timerToStop.timer);
     clearTimeout(timerToStop.alarmTimer);
     audio.pause();

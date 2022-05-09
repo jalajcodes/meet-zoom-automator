@@ -32,7 +32,6 @@ export const filterEvents = (events) => {
     } else {
       let urlArray =
         desc && desc.match(/(?:(?:https?):\/\/|www\.)(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[A-Z0-9+&@#/%=~_|$])/gim);
-      console.log("🚀 ~ file: index.js ~ line 26 ~ modifiedEvents ~ urlArray", urlArray);
 
       url = urlArray && urlArray.find((url) => url.includes("zoom") || url.includes("meet"));
 
