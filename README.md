@@ -3,83 +3,16 @@
 
 # ZooMeet
 
-Package for implementing barrel exporting in React, Next JS.
+Zoom and Google Meet Automater, never miss a meeting again.
 
-_A barrel is a way to rollup exports from several modules into a single convenient module. The barrel itself is a module file that re-exports selected exports of other modules._
+_ZooMeet is a WebApp which automates Zoom and Meet meeting for you. Just log in with your account and choose for which events you want to start alarm. Thats it, as long as you have that browser tap opened, we'll ring the alarm and open the meeting automatically for you._
 
-![Forks](https://img.shields.io/github/forks/rahulyadav139/barrel-exporter)
-![Stars](https://img.shields.io/github/stars/rahulyadav139/barrel-exporter)
+![Forks](https://img.shields.io/github/forks/jalajcodes/meet-zoom-automator)
+![Stars](https://img.shields.io/github/stars/jalajcodes/meet-zoom-automator)
 
 </div>
 
 ---
-
-## Installation
-
-```console
-  $ npm install --save-dev barrel-exporter
-```
-
-## Usage
-
-Add a script in package.json
-
-You can set any custom script name like:
-
-```json
-"scripts": {
-"exporter" : "barrel-exporter"
-}
-```
-
-Run command in console that will create index.js file in the folder where you want to implement barrel exporting
-
-```console
-$ npm run exporter --path=src/pages
-```
-
-Set path in command where you want barrel exporting.
-
-After executing the command, an index.js file is created with multiple named export at the given path. ( in this case: src/pages/index.js )
-
-```js
-export { AuthPage } from "./AuthPage.js";
-export { HomePage } from "./HomePage.js";
-```
-
-## Without Barrel Exporting
-
-Without implementing barrel exporting, files will be imported one by one from different source modules.
-
-### Tree Diagram
-
-pages <br/>
-|---AuthPage.js <br/>
-|---HomePage.js <br/>
-
-### The way to import files
-
-```js
-import AuthPage from "./pages/AuthPage";
-import HomePage from "./pages/HomePage";
-```
-
-## With Barrel Exporting
-
-With implementing barrel exporting, files will be imported all at once from a single source module.
-
-### Tree Diagram
-
-pages <br/>
-|---index.js <br/>
-|---AuthPage.js <br/>
-|---HomePage.js <br/>
-
-### The way to import files
-
-```js
-import { AuthPage, HomePage } from "./pages";
-```
 
 ## What it solves?
 
@@ -87,8 +20,11 @@ If you want to implement barrel exporting then you need to create Index.js file 
 
 ## Features
 
-- No third party package dependency
-- Light weight (~ 3kb)
-- .js and .jsx file extension supported
+- Get all the upcoming events
+- Set alarm for the events you want to attend
+- Ring alarm 20 seconds before the meeting start time.
+- Open the meeting automatically
+- Create new events from the app itself.
+- Browser Extension (Coming Soon)
 
 ---
