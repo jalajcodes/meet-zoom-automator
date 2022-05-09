@@ -7,8 +7,8 @@ Zoom and Google Meet Automater, never miss a meeting again.
 
 _ZooMeet is a WebApp which automates Zoom and Meet meeting for you. Just log in with your account and choose for which events you want to start alarm. Thats it, as long as you have that browser tap opened, we'll ring the alarm and open the meeting automatically for you._
 
-![Forks](https://img.shields.io/github/forks/jalajcodes/meet-zoom-automator)
-![Stars](https://img.shields.io/github/stars/jalajcodes/meet-zoom-automator)
+![Forks](https://img.shields.io/github/forks/jalajcodes/zoomeet)
+![Stars](https://img.shields.io/github/stars/jalajcodes/zoomeet)
 
 </div>
 
