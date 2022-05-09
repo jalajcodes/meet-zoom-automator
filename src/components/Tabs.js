@@ -1,4 +1,5 @@
 import React from "react";
+import CreateEvent from "./CreateEvent";
 import Events from "./Events";
 
 export default function Tabs() {
@@ -81,7 +82,7 @@ export default function Tabs() {
         </div>
 
         <div className="tab-pane fade" id="tabs-messagesJustify" role="tabpanel" aria-labelledby="tabs-profile-tabJustify">
-          Tab 3 content justify
+          <CreateEvent />
         </div>
       </div>
     </div>

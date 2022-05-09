@@ -1,10 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import App from "./App";
 import { AuthProvider } from "./contexts/authContext";
 import { EventsProvider } from "./contexts/eventsContext";
 import { ModalProvider } from "./contexts/modalContext";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -16,3 +17,4 @@ root.render(
     </AuthProvider>
   </ModalProvider>
 );
+reportWebVitals();

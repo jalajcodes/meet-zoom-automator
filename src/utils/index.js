@@ -11,6 +11,14 @@ export const isPopupBlocked = (url) => {
     }
   }
 };
+export function isCookieEnabled() {
+  let cookieEnabled = navigator.cookieEnabled;
+  if (!cookieEnabled) {
+    document.cookie = "testcookie";
+    cookieEnabled = document.cookie.indexOf("testcookie") != -1;
+  }
+  return cookieEnabled;
+}
 
 // map over the events and creating a new array with the url and time values
 export const filterEvents = (events) => {
