@@ -7,7 +7,7 @@ import { formatTimeFromNow } from "../utils";
 export default function Events() {
   const [scheduledTimers, setScheduledTimers] = useState(JSON.parse(localStorage.getItem("scheduledTimers")) || []);
   const { events, fetchEvents } = useEvents();
-  const audio = useAudio("/assets/alarm.mp3", { volume: 0.8 });
+  const audio = useAudio("/assets/alarm.mp3", { volume: 0.7 });
 
   useEffect(() => {
     if (!events.length) {
@@ -80,6 +80,7 @@ export default function Events() {
     console.log("🚀 ~ file: Events.js ~ line 74 ~ stopAlarm ~ timerToStop", timerToStop);
     clearTimeout(timerToStop.timer);
     clearTimeout(timerToStop.alarmTimer);
+    audio.pause();
 
     const newScheduledTimers = scheduledTimers.filter((timer) => timer.id !== id);
     setScheduledTimers(newScheduledTimers);
