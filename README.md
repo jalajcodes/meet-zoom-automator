@@ -14,10 +14,6 @@ _ZooMeet is a WebApp which automates Zoom and Meet meeting for you. Just log in 
 
 ---
 
-## What it solves?
-
-If you want to implement barrel exporting then you need to create Index.js file and then manually export all the files with correct path. But with **Barrel Exporter**, Index.js file is automatically created with correct exporting and path. Isn't it amazing!!
-
 ## Features
 
 - Get all the upcoming events
