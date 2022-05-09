@@ -59,7 +59,7 @@ export const filterEvents = (events) => {
   });
 
   const filteredEvents = modifiedEvents.filter((event) => {
-    if (event?.description?.toLowerCase().includes("zoom") || event?.description?.toLowerCase().includes("google meet") || event?.hangoutLink) {
+    if (event?.description?.toLowerCase().includes("zoom.us") || event?.description?.toLowerCase().includes("meet.google") || event?.hangoutLink) {
       return true;
     }
 

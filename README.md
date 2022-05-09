@@ -1,70 +1,94 @@
-# Getting Started with Create React App
+<div align="center">
+<img src="public/logo.png" alt="logo">
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# ZooMeet
 
-## Available Scripts
+Package for implementing barrel exporting in React, Next JS.
 
-In the project directory, you can run:
+_A barrel is a way to rollup exports from several modules into a single convenient module. The barrel itself is a module file that re-exports selected exports of other modules._
 
-### `npm start`
+![Forks](https://img.shields.io/github/forks/rahulyadav139/barrel-exporter)
+![Stars](https://img.shields.io/github/stars/rahulyadav139/barrel-exporter)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+</div>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```console
+  $ npm install --save-dev barrel-exporter
+```
 
-### `npm run build`
+## Usage
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Add a script in package.json
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+You can set any custom script name like:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```json
+"scripts": {
+"exporter" : "barrel-exporter"
+}
+```
 
-### `npm run eject`
+Run command in console that will create index.js file in the folder where you want to implement barrel exporting
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```console
+$ npm run exporter --path=src/pages
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Set path in command where you want barrel exporting.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+After executing the command, an index.js file is created with multiple named export at the given path. ( in this case: src/pages/index.js )
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```js
+export { AuthPage } from "./AuthPage.js";
+export { HomePage } from "./HomePage.js";
+```
 
-## Learn More
+## Without Barrel Exporting
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Without implementing barrel exporting, files will be imported one by one from different source modules.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Tree Diagram
 
-### Code Splitting
+pages <br/>
+|---AuthPage.js <br/>
+|---HomePage.js <br/>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### The way to import files
 
-### Analyzing the Bundle Size
+```js
+import AuthPage from "./pages/AuthPage";
+import HomePage from "./pages/HomePage";
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## With Barrel Exporting
 
-### Making a Progressive Web App
+With implementing barrel exporting, files will be imported all at once from a single source module.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Tree Diagram
 
-### Advanced Configuration
+pages <br/>
+|---index.js <br/>
+|---AuthPage.js <br/>
+|---HomePage.js <br/>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### The way to import files
 
-### Deployment
+```js
+import { AuthPage, HomePage } from "./pages";
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## What it solves?
 
-### `npm run build` fails to minify
+If you want to implement barrel exporting then you need to create Index.js file and then manually export all the files with correct path. But with **Barrel Exporter**, Index.js file is automatically created with correct exporting and path. Isn't it amazing!!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Features
+
+- No third party package dependency
+- Light weight (~ 3kb)
+- .js and .jsx file extension supported
+
+---

@@ -27,6 +27,7 @@ const AuthProvider = ({ children }) => {
 
     localStorage.setItem("isLoggedIn", false);
     localStorage.setItem("userProfile", null);
+    localStorage.setItem("scheduledTimers", null);
   };
 
   const fetchProfile = () => {
