@@ -1,19 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useEvents } from "../contexts/eventsContext";
 
 const CreateEvent = () => {
-  const { createEvent } = useEvents();
+  const { createEvent, createEventResult, fetchEvents } = useEvents();
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
   const [summary, setSummary] = useState();
   const [description, setDescription] = useState();
+
+  useEffect(() => {
+    if (createEventResult && createEventResult.status === 200) {
+      fetchEvents();
+
+      document.getElementById("tabs-home-tabJustify").click();
+    }
+  }, [createEventResult]);
+
   return (
     <div className="block p-6 rounded-lg shadow-lg bg-white md:w-max w-min  mx-auto text-left">
       <form
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
 
-          createEvent(startTime, endTime, summary, description);
+          try {
+             await createEvent(startTime, endTime, summary, description);
+          } catch (error) {
+          console.log("🚀 ~ file: CreateEvent.jsx ~ line 21 ~ CreateEvent ~ error", error)
+          }
         }}
       >
         <div className="flex items-end gap-2 flex-wrap">
@@ -39,6 +52,7 @@ const CreateEvent = () => {
         focus:text-gray-700 focus:bg-white focus:border-violet-600 focus:outline-none"
               id="exampleInput7"
               placeholder="Event title"
+              onChange={(e) => setSummary(e.target.value)}
             />
           </div>
           <div className="form-group mb-6">
@@ -63,6 +77,7 @@ const CreateEvent = () => {
         focus:text-gray-700 focus:bg-white focus:border-violet-600 focus:outline-none"
               id="exampleInput8"
               placeholder=""
+              onChange={(e) => setStartTime(e.target.value)}
             />
           </div>
           <div className="form-group mb-6">
@@ -87,6 +102,7 @@ const CreateEvent = () => {
         focus:text-gray-700 focus:bg-white focus:border-violet-600 focus:outline-none"
               id="exampleInput9"
               placeholder=""
+              onChange={(e) => setEndTime(e.target.value)}
             />
           </div>
         </div>
@@ -112,7 +128,7 @@ const CreateEvent = () => {
             id="exampleFormControlTextarea13"
             rows={3}
             placeholder="Event description"
-            defaultValue={""}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </div>
 

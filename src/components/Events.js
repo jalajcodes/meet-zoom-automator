@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Countdown from "react-countdown";
 import { useEvents } from "../contexts/eventsContext";
 import { useAudio } from "../hooks/useAudio";
 import { formatTimeFromNow } from "../utils";
@@ -6,7 +7,7 @@ import { formatTimeFromNow } from "../utils";
 export default function Events() {
   const [scheduledTimers, setScheduledTimers] = useState(JSON.parse(localStorage.getItem("scheduledTimers")) || []);
   const { events, fetchEvents } = useEvents();
-  const audio = useAudio("/assets/alarm.wav", { volume: 0.8, playbackRate: 1.5 });
+  const audio = useAudio("/assets/alarm.mp3", { volume: 0.8 });
 
   useEffect(() => {
     if (!events.length) {
@@ -17,7 +18,12 @@ export default function Events() {
   useEffect(() => {
     if (scheduledTimers.length) {
       scheduledTimers.forEach((timer) => {
-        handleTimer(timer);
+        if (Date.now() > timer.time) {
+          // reset the timer
+          setScheduledTimers(scheduledTimers.filter((t) => t.id !== timer.id));
+        } else {
+          handleTimer(timer);
+        }
       });
     }
   }, []);
@@ -80,6 +86,25 @@ export default function Events() {
     localStorage.setItem("scheduledTimers", JSON.stringify(newScheduledTimers));
   };
 
+  const handleRefresh = () => {
+    fetchEvents();
+
+    scheduledTimers.forEach((timer) => {
+      if (Date.now() > timer.time) {
+        // reset the timer
+        setScheduledTimers(scheduledTimers.filter((t) => t.id !== timer.id));
+      } else {
+        handleTimer(timer);
+      }
+    });
+  };
+
+  const startAllAlarms = () => {
+    events.forEach((event) => {
+      startAlarm(event);
+    });
+  };
+
   const timerAlreadyStarted = (id) => {
     return scheduledTimers.find((timer) => timer.id === id);
   };
@@ -89,11 +114,31 @@ export default function Events() {
   }
 
   return (
-    <div className="flex p-5">
-      <ul className=" text-left text-gray-900 flex gap-3 flex-wrap">
+    <div className="flex justify-center flex-col p-5">
+      <ul className="mb-4">
+        <button
+          type="button"
+          data-mdb-ripple="true"
+          data-mdb-ripple-color="light"
+          onClick={handleRefresh}
+          className="inline-block mx-3 px-6 mt-2 py-2.5 bg-green-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
+        >
+          Refresh Events
+        </button>
+        <button
+          type="button"
+          data-mdb-ripple="true"
+          data-mdb-ripple-color="light"
+          onClick={startAllAlarms}
+          className="inline-block px-6 mt-2 py-2.5 bg-slate-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-slate-700 hover:shadow-lg focus:bg-slate-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-slate-800 active:shadow-lg transition duration-150 ease-in-out"
+        >
+          Start All Alarms
+        </button>
+      </ul>
+      <ul className=" text-left text-gray-900 flex gap-3 justify-center flex-wrap">
         {events.map((event) => (
           <React.Fragment key={event.id}>
-            <li className="px-5 shadow-md border-2 py-4 border-slate-300 bg-slate-200  rounded-lg gap-2 flex flex-col w-fit">
+            <li className="px-5 shadow-md border-2 py-4 md:w-fit w-full break-all border-slate-300 bg-slate-200  rounded-lg gap-2 flex flex-col">
               <div className="flex flex-col gap-1">
                 <div>
                   <strong>Event Name:</strong> {event.summary}
@@ -110,7 +155,7 @@ export default function Events() {
 
                 {event.time && (
                   <div>
-                    <strong>Start Time:</strong> {formatTimeFromNow(event.time)}
+                    <strong>Starting in:</strong> {timerAlreadyStarted(event.id) ? <Countdown date={event.time} /> : formatTimeFromNow(event.time)}
                   </div>
                 )}
               </div>

@@ -6,6 +6,7 @@ const EventsContext = createContext();
 
 const EventsProvider = ({ children }) => {
   const [events, setEvents] = useState([]);
+  const [createEventResult, setCreateEventResult] = useState(null);
 
   const fetchEvents = () => {
     ApiCalendar.onLoad(() => {
@@ -42,31 +43,13 @@ const EventsProvider = ({ children }) => {
       },
     };
     ApiCalendar.onLoad(() => {
-      ApiCalendar.createEvent(event, "123").then((result) => {
-        console.log(result);
+      ApiCalendar.createEvent(event).then((result) => {
+        setCreateEventResult(result);
       });
     });
   };
 
-  // timer.current = setInterval(() => {
-  //   console.log("passcode is", passcode);
-  //   const now = new Date().getTime();
-  //   console.log(formattedTime, now);
-  //   // if (now >= formattedTime && url.includes('zoom')) {
-  //     clearInterval(timer.current);
-  //     let newTab = window.open();
-  //     newTab.location.href = url;
-  //     // window.open(`${url}?pwd=${passcode}`, "_blank");
-  //   // }
-  // },
-  //  1000)
-  // }
-  // }
-
-  // return () => clearTimeout(timer.current);
-  //   }, [events]);
-
-  const value = { events, fetchEvents, createEvent };
+  const value = { events, fetchEvents, createEvent, createEventResult };
 
   return <EventsContext.Provider value={value}>{children}</EventsContext.Provider>;
 };

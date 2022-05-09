@@ -30,7 +30,7 @@ function Header() {
                       id="dropdownMenuButton2"
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
-                      src="https://www.shareicon.net/data/512x512/2016/09/01/822711_user_512x512.png"
+                      src={"https://www.shareicon.net/data/512x512/2016/09/01/822711_user_512x512.png"}
                       className="w-12 overflow-hidden h-12 rounded-full aspect-square border-2 border-violet-400 shadow-sm"
                       alt={userProfile.name}
                     />
@@ -39,18 +39,6 @@ function Header() {
                       className="dropdown-menu right-5  min-w-max absolute  text-base z-50 float-left py-2 list-none text-left rounded-lg shadow-lg mt-1 hidden m-0 bg-clip-padding border-none bg-slate-800"
                       aria-labelledby="dropdownMenuButton2"
                     >
-                      <li>
-                        <a
-                          className="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white focus:text-white focus:bg-gray-700 active:bg-violet-600"
-                          href="#"
-                        >
-                          Profile
-                        </a>
-                      </li>
-
-                      <li>
-                        <hr className="h-0 my-2 border border-solid border-t-0 border-gray-300 opacity-25" />
-                      </li>
                       <li
                         className="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white focus:text-white focus:bg-gray-700"
                         onClick={handleLogout}
